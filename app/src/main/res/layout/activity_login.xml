@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.developinggeek.task1admin.LoginActivity"
+    android:background="@color/colorPrimary"
+    android:orientation="vertical"
+    android:gravity="center">
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Email"
+        android:id="@+id/login_edt_email"
+        android:gravity="center"
+        android:inputType="textEmailAddress"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:background="@drawable/edt_background"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Password"
+        android:layout_marginTop="30dp"
+        android:id="@+id/login_edt_pass"
+        android:gravity="center"
+        android:inputType="textPassword"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:background="@drawable/edt_background"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:id="@+id/login_btn"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:text="Login"
+        android:textColor="#FFF"
+        android:background="@drawable/btn_background"/>
+
+</LinearLayout>
