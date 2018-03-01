@@ -229,9 +229,11 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         switch(id)
         {
             case R.id.main_menu_logout : mAuth.signOut();
-                                        startActivity(new Intent(MainActivity.this,LoginActivity.class));
-                                        break;
+                                         startActivity(new Intent(MainActivity.this,LoginActivity.class));
+                                         break;
 
+            case R.id.main_menu_add_aubcategory : startActivity(new Intent(MainActivity.this,AddSubCategoryActivity.class));
+                                                  break;
         }
 
         return super.onOptionsItemSelected(item);
