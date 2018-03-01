@@ -175,7 +175,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
                             @SuppressWarnings("VisibleForTests") final Uri imgUri2 = taskSnapshot.getDownloadUrl();
 
-                            DatabaseReference productDB = mDatabase.child(category).child(subCategory).child(title);
+                            DatabaseReference productDB = mDatabase.child(category).child(title);
 
                             HashMap productMap = new HashMap();
                             productMap.put("title",title);
@@ -234,6 +234,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
             case R.id.main_menu_add_aubcategory : startActivity(new Intent(MainActivity.this,AddSubCategoryActivity.class));
                                                   break;
+
+            case R.id.main_menu_search : startActivity(new Intent(MainActivity.this,EditProductActivity.class));
+                                         break;
         }
 
         return super.onOptionsItemSelected(item);

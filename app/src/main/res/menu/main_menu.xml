@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:title="search product"
+    <item android:title="edit product"
           android:id="@+id/main_menu_search"/>
 
     <item android:title="add aubcategory"
