@@ -16,24 +16,13 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <Button
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="20dp"
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/main_toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/btn_search"
-                android:text="Search Product"
-                android:textColor="#FFF"
-                android:layout_marginRight="40dp"
-                android:background="@drawable/btn_background"
-                android:layout_centerHorizontal="true"
-                />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="5dp"
-                android:background="#000"
-                android:layout_below="@+id/btn_search"/>
+                android:layout_height="?attr/actionBarSize"
+                android:background="@color/colorPrimary"
+                >
+            </android.support.v7.widget.Toolbar>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -44,9 +33,9 @@
                 android:textStyle="bold"
                 android:id="@+id/textView"
                 android:layout_marginLeft="10dp"
-                android:layout_alignBaseline="@+id/main_img_btn"
-                android:layout_alignBottom="@+id/main_img_btn"
-                android:layout_toEndOf="@+id/main_img_btn" />
+                android:layout_below="@+id/main_toolbar"
+                android:layout_marginTop="10dp"
+                android:layout_centerHorizontal="true"/>
 
             <Button
                 android:id="@+id/main_img_btn"
@@ -58,28 +47,66 @@
                 android:paddingLeft="10dp"
                 android:paddingRight="10dp"
                 android:paddingTop="5dp"
-                android:text="Choose photo"
+                android:text="Choose 1 photo"
                 android:textColor="#fff"
-                android:layout_below="@+id/btn_search"
+                android:layout_below="@+id/textView"
                 android:layout_marginTop="15dp"
-                android:layout_alignStart="@+id/main_image" />
+                android:layout_alignStart="@+id/main_img_container" />
 
-            <ImageButton
+            <Button
+                android:id="@+id/main_img_btn_2"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/btn_background"
+                android:paddingBottom="5dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="5dp"
+                android:text="Choose 2 photo"
+                android:textColor="#fff"
+                android:layout_below="@+id/textView"
+                android:layout_marginTop="15dp"
+                android:layout_alignEnd="@+id/main_img_container" />
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:id="@+id/main_image"
+                android:layout_height="wrap_content"
+                android:id="@+id/main_img_container"
                 android:layout_below="@+id/main_img_btn"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:background="@drawable/grey_background"
-                android:scaleType="fitXY"/>
+                android:weightSum="2"
+                android:orientation="horizontal"
+                >
+
+                <ImageButton
+                    android:layout_width="0dp"
+                    android:layout_height="200dp"
+                    android:id="@+id/main_image"
+                    android:scaleType="fitXY"
+                    android:layout_weight="1"
+                    android:background="@drawable/grey_background"
+                    />
+
+                <ImageButton
+                    android:layout_marginLeft="20dp"
+                    android:layout_width="0dp"
+                    android:layout_height="200dp"
+                    android:id="@+id/main_image2"
+                    android:scaleType="fitXY"
+                    android:layout_weight="1"
+                    android:background="@drawable/grey_background"
+                    />
+
+            </LinearLayout>
 
             <TextView
                 android:layout_width="170dp"
                 android:layout_height="40dp"
                 android:id="@+id/main_cat_txt"
-                android:layout_below="@+id/main_image"
+                android:layout_below="@+id/main_img_container"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/grey_background"
                 android:text="Select category"
@@ -94,7 +121,7 @@
                 android:id="@+id/main_spinner"
                 android:prompt="@string/spinner_prompt"
                 android:layout_marginLeft="200dp"
-                android:layout_below="@+id/main_image"
+                android:layout_below="@+id/main_img_container"
                 android:layout_marginTop="10dp">
             </Spinner>
 
