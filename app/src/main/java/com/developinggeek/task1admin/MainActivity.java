@@ -25,8 +25,11 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -35,19 +38,20 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
-
+public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener
+{
     private FirebaseAuth mAuth;
-    private EditText edtTitle , edtDesc , edtPrice , edtStatus ,edtSubCategory;
+    private EditText edtTitle , edtDesc , edtPrice , edtStatus;
     private Button btnImg ,btnUpload ,btnImg2 ;
     private ImageButton imgView , imgView2;
-    private DatabaseReference mDatabase;
+    private DatabaseReference mDatabase,catDatabase;
     private ProgressDialog mProgress;
     private StorageReference mStorage;
     private Uri mImageUri = null , mImageUri2 = null;
-    private String category;
-    private Spinner spinner;
+    private String category,subCategory;
+    private Spinner spinner,subSpinner;
     private Toolbar mToolbar;
+    private ArrayList<String> subArraylist;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -63,17 +67,21 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         imgView = (ImageButton)findViewById(R.id.main_image);
         btnUpload = (Button)findViewById(R.id.main_btn_upload);
         spinner = (Spinner)findViewById(R.id.main_spinner);
-        edtSubCategory = (EditText)findViewById(R.id.main_edt_subcategory);
         btnImg2 = (Button)findViewById(R.id.main_img_btn_2);
         imgView2 = (ImageButton)findViewById(R.id.main_image2);
         mToolbar = (Toolbar)findViewById(R.id.main_toolbar);
+        subSpinner = (Spinner)findViewById(R.id.main_subcat_spinner);
 
         setSupportActionBar(mToolbar);
 
-        mProgress = new ProgressDialog(this);
+        mProgress = new ProgressDialog(MainActivity.this);
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Products");
+        catDatabase = FirebaseDatabase.getInstance().getReference().child("Category");
         mStorage = FirebaseStorage.getInstance().getReference();
+        subArraylist = new ArrayList<String>();
+
+        subArraylist.add("select one");
 
         if(mAuth.getCurrentUser()==null)
         {
@@ -86,23 +94,45 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         {
             spinner.setOnItemSelectedListener(this);
 
+            subSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
+                {
+                    /*subCategory = adapterView.getItemAtPosition(i).toString();
+                    Log.i("select subcat",subCategory);*/
+                }
+
+                @Override
+                public void onNothingSelected(AdapterView<?> adapterView) {
+
+                }
+            });
+
             // set up the list for spinner
             List<String> categories = new ArrayList<String>();
-            categories.add("category 1");
-            categories.add("category 2");
-            categories.add("category 3");
-            categories.add("category 4");
-            categories.add("category 5");
-            categories.add("category 6");
-            categories.add("category 7");
-            categories.add("category 8");
+            categories.add("Sensors");
+            categories.add("Embedded");
+            categories.add("Do it Yourself");
+            categories.add("Basic Components");
+            categories.add("Robotics");
+            categories.add("Tools");
+            categories.add("PCB Request");
+            categories.add("Contact us");
 
             // Creating adapter for spinner
-            ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
+            ArrayAdapter<String> dataAdapter2 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
+            // Drop down layout style - list view with radio button
+            dataAdapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            // attaching data adapter to spinner
+            spinner.setAdapter(dataAdapter2);
+
+            // Creating adapter for spinner
+            ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, subArraylist);
             // Drop down layout style - list view with radio button
             dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             // attaching data adapter to spinner
-            spinner.setAdapter(dataAdapter);
+            subSpinner.setAdapter(dataAdapter);
+
 
             btnImg.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -146,7 +176,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         final String desc = edtDesc.getText().toString();
         final String price = edtPrice.getText().toString();
         final String status = edtStatus.getText().toString();
-        final String subCategory = edtSubCategory.getText().toString();
+        subCategory = subSpinner.getSelectedItem().toString();
 
         if(!TextUtils.isEmpty(title) && !TextUtils.isEmpty(desc) && !TextUtils.isEmpty(price) && !TextUtils.isEmpty(status)
            && !TextUtils.isEmpty(subCategory) && !TextUtils.isEmpty(category) && mImageUri!=null &&mImageUri2!=null)
@@ -156,7 +186,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             mProgress.setCanceledOnTouchOutside(false);
             mProgress.show();
 
-            StorageReference filepath = mStorage.child("blog_images").child(mImageUri.getLastPathSegment());
+            StorageReference filepath = mStorage.child(title).child(mImageUri.getLastPathSegment());
             filepath.putFile(mImageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>()
             {
                 // Uploading First Image
@@ -180,7 +210,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                             HashMap productMap = new HashMap();
                             productMap.put("title",title);
                             productMap.put("description",desc);
-                            productMap.put("price",price);
+                            productMap.put("price","₹ "+price);
                             productMap.put("status",status);
                             productMap.put("category",category);
                             productMap.put("subcategory",subCategory);
@@ -191,6 +221,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if (task.isSuccessful()) {
                                         Toast.makeText(MainActivity.this, "product uploaded", Toast.LENGTH_SHORT).show();
+                                        mProgress.dismiss();
                                     } else {
                                         Toast.makeText(MainActivity.this, "error couldnot be uploaded", Toast.LENGTH_SHORT).show();
                                     }
@@ -204,7 +235,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 }
 
             });
-            mProgress.dismiss();
         }
         else
         {
@@ -265,8 +295,41 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
     {
-        category = adapterView.getItemAtPosition(i).toString();
-        Log.i("spinner"," category : "+category);
+            subArraylist.clear();
+
+            category = adapterView.getItemAtPosition(i).toString();
+            Log.i("spinner"," category : "+category);
+
+            DatabaseReference subDatabase = catDatabase.child(category);
+            subDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot)
+                {
+                    for (DataSnapshot snapshot : dataSnapshot.getChildren())
+                    {
+                        Log.i("snapshot",snapshot.toString());
+
+                        String subcat = snapshot.child("name").getValue().toString();
+                        Log.i("subcat",subcat);
+                        subArraylist.add(subcat);
+                    }
+
+                    Log.i("arraylist",subArraylist.toString());
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+
+            /*// Creating adapter for spinner
+            ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(MainActivity.this, android.R.layout.simple_spinner_item, subArraylist);
+            // Drop down layout style - list view with radio button
+            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            // attaching data adapter to spinner
+            subSpinner.setAdapter(dataAdapter);*/
+
     }
 
     @Override

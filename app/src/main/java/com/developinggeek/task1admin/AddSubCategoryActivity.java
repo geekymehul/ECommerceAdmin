@@ -44,14 +44,14 @@ public class AddSubCategoryActivity extends AppCompatActivity implements Adapter
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Category");
 
         List<String> categories = new ArrayList<String>();
-        categories.add("category 1");
-        categories.add("category 2");
-        categories.add("category 3");
-        categories.add("category 4");
-        categories.add("category 5");
-        categories.add("category 6");
-        categories.add("category 7");
-        categories.add("category 8");
+        categories.add("Sensors");
+        categories.add("Embedded");
+        categories.add("Do it Yourself");
+        categories.add("Basic Components");
+        categories.add("Robotics");
+        categories.add("Tools");
+        categories.add("PCB Request");
+        categories.add("Contact us");
 
         // Creating adapter for spinner
         ArrayAdapter<String> dataAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categories);
