@@ -19,6 +19,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -34,6 +35,8 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -42,6 +45,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 {
     private FirebaseAuth mAuth;
     private EditText edtTitle , edtDesc , edtPrice , edtStatus;
+    private TextView tvSubCat;
     private Button btnImg ,btnUpload ,btnImg2 ;
     private ImageButton imgView , imgView2;
     private DatabaseReference mDatabase,catDatabase;
@@ -70,6 +74,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         btnImg2 = (Button)findViewById(R.id.main_img_btn_2);
         imgView2 = (ImageButton)findViewById(R.id.main_image2);
         mToolbar = (Toolbar)findViewById(R.id.main_toolbar);
+        tvSubCat = (TextView)findViewById(R.id.main_edt_subcategory);
         subSpinner = (Spinner)findViewById(R.id.main_subcat_spinner);
 
         setSupportActionBar(mToolbar);
@@ -93,20 +98,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         else
         {
             spinner.setOnItemSelectedListener(this);
-
-            subSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
-                {
-                    /*subCategory = adapterView.getItemAtPosition(i).toString();
-                    Log.i("select subcat",subCategory);*/
-                }
-
-                @Override
-                public void onNothingSelected(AdapterView<?> adapterView) {
-
-                }
-            });
 
             // set up the list for spinner
             List<String> categories = new ArrayList<String>();
@@ -132,6 +123,16 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             // attaching data adapter to spinner
             subSpinner.setAdapter(dataAdapter);
+
+
+            subSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                @Override
+                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l)
+                {}
+
+                @Override
+                public void onNothingSelected(AdapterView<?> adapterView) {}
+            });
 
 
             btnImg.setOnClickListener(new View.OnClickListener() {
@@ -177,6 +178,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         final String price = edtPrice.getText().toString();
         final String status = edtStatus.getText().toString();
         subCategory = subSpinner.getSelectedItem().toString();
+
+        tvSubCat.setText(subCategory+"");
 
         if(!TextUtils.isEmpty(title) && !TextUtils.isEmpty(desc) && !TextUtils.isEmpty(price) && !TextUtils.isEmpty(status)
            && !TextUtils.isEmpty(subCategory) && !TextUtils.isEmpty(category) && mImageUri!=null &&mImageUri2!=null)
