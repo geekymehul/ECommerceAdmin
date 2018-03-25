@@ -273,6 +273,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
             case R.id.main_menu_coupon : startActivity(new Intent(MainActivity.this,CouponActivity.class));
                                          break;
+
+            case R.id.main_menu_update_coupon : startActivity(new Intent(MainActivity.this,UpdateCouponActivity.class));
+                                                break;
         }
 
         return super.onOptionsItemSelected(item);

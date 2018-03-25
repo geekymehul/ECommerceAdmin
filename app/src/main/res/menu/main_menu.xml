@@ -10,6 +10,9 @@
     <item android:title="add coupon"
         android:id="@+id/main_menu_coupon"/>
 
+    <item android:title="update coupon"
+        android:id="@+id/main_menu_update_coupon"/>
+
     <item android:title="logout"
           android:id="@+id/main_menu_logout"/>
 

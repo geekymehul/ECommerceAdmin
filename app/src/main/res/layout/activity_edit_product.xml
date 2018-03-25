@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.developinggeek.task1admin.EditProductActivity"
+    android:layout_margin="10dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="3"
+            android:orientation="horizontal"
+            android:id="@+id/edit_search_container">
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.2"
+                android:hint="product name"
+                android:id="@+id/edit_edt_name"/>
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:id="@+id/edit_category"
+                android:hint="category"/>
+
+            <Button
+                android:id="@+id/edit_btn_search"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="0.7"
+                android:text="ok" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_below="@+id/edit_search_container"
+            android:background="#000"
+            android:id="@+id/edit_view"
+            android:layout_marginTop="10dp"/>
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:textSize="18sp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:text="Product Name"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/grey_background"
+            android:id="@+id/edit_name"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/edit_view"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="2"
+            android:orientation="horizontal"
+            android:layout_below="@+id/edit_name"
+            android:id="@+id/edit_img_container"
+            android:layout_marginTop="10dp">
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="200dp"
+                android:layout_weight="1"
+                android:id="@+id/edit_img1"
+                android:background="@drawable/grey_background"/>
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="200dp"
+                android:layout_weight="1"
+                android:id="@+id/edit_img2"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/grey_background"/>
+
+        </LinearLayout>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:textSize="18sp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:text="Product Description goes here"
+            android:layout_marginTop="10dp"
+            android:maxLines="1"
+            android:background="@drawable/grey_background"
+            android:id="@+id/edit_desc"
+            android:layout_below="@+id/edit_img_container"/>
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:textSize="18sp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:text="Product Price"
+            android:inputType="number"
+            android:layout_marginTop="10dp"
+            android:maxLines="1"
+            android:background="@drawable/grey_background"
+            android:id="@+id/edit_price"
+            android:layout_below="@+id/edit_desc"/>
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:textSize="18sp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:text="Stock status"
+            android:layout_marginTop="10dp"
+            android:maxLines="1"
+            android:background="@drawable/grey_background"
+            android:id="@+id/edit_stock"
+            android:layout_alignEnd="@+id/edit_desc"
+            android:layout_below="@+id/edit_desc"/>
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:textSize="18sp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:text="Product Subcategory"
+            android:layout_marginTop="10dp"
+            android:maxLines="1"
+            android:background="@drawable/grey_background"
+            android:id="@+id/edit_subcategory"
+            android:layout_below="@+id/edit_price"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/edit_btn_img1"
+            android:layout_below="@+id/edit_subcategory"
+            android:layout_marginTop="10dp"
+            android:textColor="#FFF"
+            android:text="change Image 1"
+            android:background="@drawable/btn_background"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/edit_btn_img2"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/edit_subcategory"
+            android:layout_marginTop="10dp"
+            android:textColor="#FFF"
+            android:text="change Image 2"
+            android:background="@drawable/btn_background"/>
+
+        <Button
+            android:layout_width="110dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/edit_update"
+            android:layout_below="@+id/edit_btn_img1"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:textColor="#FFF"
+            android:text="Update"
+            android:background="@drawable/btn_background"/>
+
+    </RelativeLayout>
+
+</ScrollView>
