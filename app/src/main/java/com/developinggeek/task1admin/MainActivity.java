@@ -270,6 +270,9 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
             case R.id.main_menu_search : startActivity(new Intent(MainActivity.this,EditProductActivity.class));
                                          break;
+
+            case R.id.main_menu_coupon : startActivity(new Intent(MainActivity.this,CouponActivity.class));
+                                         break;
         }
 
         return super.onOptionsItemSelected(item);

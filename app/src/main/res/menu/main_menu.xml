@@ -4,8 +4,11 @@
     <item android:title="edit product"
           android:id="@+id/main_menu_search"/>
 
-    <item android:title="add aubcategory"
+    <item android:title="add subcategory"
           android:id="@+id/main_menu_add_aubcategory"/>
+
+    <item android:title="add coupon"
+        android:id="@+id/main_menu_coupon"/>
 
     <item android:title="logout"
           android:id="@+id/main_menu_logout"/>
