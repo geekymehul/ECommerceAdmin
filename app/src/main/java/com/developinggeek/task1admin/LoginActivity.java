@@ -1,5 +1,6 @@
 package com.developinggeek.task1admin;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -24,7 +25,6 @@ import com.google.firebase.database.ValueEventListener;
 
 public class LoginActivity extends AppCompatActivity
 {
-
     private Button btnLogin;
     private EditText edtMail ,edtPass;
     private FirebaseAuth mAuth;
@@ -38,12 +38,22 @@ public class LoginActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        MainActivity.fa.finish();
+
         btnLogin = (Button)findViewById(R.id.login_btn);
         edtMail = (EditText)findViewById(R.id.login_edt_email);
         edtPass = (EditText)findViewById(R.id.login_edt_pass);
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference().child("Admin");
         mProgress = new ProgressDialog(this);
+
+        if(mAuth.getCurrentUser()!=null)
+        {
+            Intent loginIntent = new Intent(LoginActivity.this , MainActivity.class);
+            loginIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            startActivity(loginIntent);
+            finish();
+        }
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,6 +110,7 @@ public class LoginActivity extends AppCompatActivity
                                     Intent loginIntent = new Intent(LoginActivity.this , MainActivity.class);
                                     loginIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                     startActivity(loginIntent);
+                                    finish();
                                 }
                             }
                         });

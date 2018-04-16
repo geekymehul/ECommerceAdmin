@@ -1,5 +1,6 @@
 package com.developinggeek.task1admin;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
@@ -43,6 +44,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener
 {
+    public static Activity fa;
     private FirebaseAuth mAuth;
     private EditText edtTitle , edtDesc , edtPrice , edtStatus;
     private TextView tvSubCat;
@@ -62,6 +64,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        fa = this;
 
         edtTitle = (EditText)findViewById(R.id.main_edt_title);
         edtDesc = (EditText)findViewById(R.id.main_edt_desc);
@@ -93,6 +97,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
             Intent loginIntent = new Intent(MainActivity.this , LoginActivity.class);
             loginIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
             startActivity(loginIntent);
+            finish();
         }
 
         else
